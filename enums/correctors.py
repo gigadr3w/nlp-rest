@@ -1,8 +1,8 @@
 import enum
 
-class EnumCorrector(enum.Enum):
-    blank = ''
-    en='en'
-    it='it'
-    de='de'
-    es='es'
+class CorrectorLanguageEnum(enum.Enum):
+    en='en-EN'
+    it='it-IT'
+    de='de-DE'
+    es='es-ES'
+    fr='fr-FR'
