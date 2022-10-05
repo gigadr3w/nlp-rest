@@ -1,11 +1,10 @@
 A Nlp-rest service 
 ========================
 
-This is a basic nlp-rest service made in python flask with which you can handle some different Natural Language Processing functions such as:
+This is a basic rest service made with python [flask](https://flask.palletsprojects.com/en/2.2.x/) with an easy Swagger interface made with [flask_restx](https://flask-restx.readthedocs.io/en/latest/), with which you can handle some different Natural Language Processing functions such as:
 
 * correct statements, using
-    - [libenchant1c2a](https://www.ubuntuupdates.org/package/core/focal/universe/base/libenchant1c2a) a wrapper library for various spell checker engines
-    - various [aspell](https://ftp.gnu.org/gnu/aspell/dict/0index.html) language dictionaries
+    - [pyenchant](https://pyenchant.github.io/pyenchant/) a library for spellchecking based on [Enchant](https://abiword.github.io/enchant/) thant uses some [aspell](https://ftp.gnu.org/gnu/aspell/dict/0index.html) language dictionaries
 * tokenize statements
 * clear statements from stop words
 * lemmantization, using
@@ -22,7 +21,9 @@ Requirements
 python3 -m venv /path/to/new/virtual/environment
 ```
 
-To use the virtual environment just created type 
+Once you've created the virtual environment VSCode should prompt a message for select it as default python interpreter. If not with the VSCode command prompt (in my case `Ctrl-Shift-P`) choose `Python: select interpreter` and next select the interpreter in your virtual environment
+
+Then, in the VSCode terminal activate the virtual environment typing 
 
 ```Shell
 source /path/to/new/virtual/environment/bin/activate
@@ -30,34 +31,13 @@ source /path/to/new/virtual/environment/bin/activate
 
 For more informations about virtual environment you can take a look [here](https://docs.python.org/3/library/venv.html)
 
-2. Second, you need to set properly your virtual environment. Once you're in:
-
-- Install package dependencies typing
+2. Second, you need to set properly your virtual environment installing all the dependencies : there is a setup.py file, open it and take a look. Once you're in the virtual environment type
 
 ```Shell
-pip install -r requirements.txt
-```
-
-Now, we have to set up the enchant wrapper and some aspell dictionaries (I've opted for IT, EN, FR, DE, and ES)
-
-```Shell
-sudo bash -c 'apt-get update && /
-apt-get --assume-yes install libenchant1c2a && /
-apt-get --assume-yes install aspell-it && /
-apt-get --assume-yes install aspell-fr && /
-apt-get --assume-yes install aspell-de && /
-apt-get --assume-yes install aspell-es'
-```
-
-At at the end, set up other spacy dicionaries
-
-```Shell
-python3 -m spacy download en_core_web_sm && 
-python3 -m spacy download fr_core_news_sm && 
-python3 -m spacy download de_core_news_sm && 
-python3 -m spacy download it_core_news_sm && 
-python3 -m spacy download es_core_news_sm
+pip install .
 ```
 
 How to use 
 ========================
+
+Once you've installed all the dependencies, you can run and debug the solution: enjoy!
