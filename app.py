@@ -13,7 +13,7 @@ from api.corrector import api as api_corrector
 version = "1.0.1"
 
 api = Api()
-api.add_namespace(api_about, path='/api')
+
 api.add_namespace(api_corrector, path='/api')
 
 app = Flask(__name__)
