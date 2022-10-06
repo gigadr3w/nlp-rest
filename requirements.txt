@@ -1,7 +1,0 @@
-werkzeug==2.1.2
-flask==2.1.2
-flask_restx
-waitress
-nltk
-pyenchant==3.0.0a1
-spacy
