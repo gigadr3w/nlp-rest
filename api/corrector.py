@@ -6,7 +6,7 @@ from models.corrector import CorrectionModel
 
 from handlers.corrector import CorrectorHandler
 
-api = Namespace('corrector', description='Method that correct an entire sentence due to the specified languages')
+api = Namespace('corrector', description='Using pyEnchant, corrects an entire sentence for the selected language')
 
 input_model = api.model('ToCorrect', {
     'sentences' : fields.List(fields.String(), required=True, description='The sentence that have to been corrected') 
@@ -17,7 +17,7 @@ output_model = api.model('Corrected', {
 })
 
 @api.route('/corrector/<string:language>')
-@api.param('language', description='The language of the dictionary with which correct the sentence', enum=CorrectorLanguageEnum._member_names_)
+@api.param('language', description='The language to consider to correct the sentence', enum=CorrectorLanguageEnum._member_names_)
 class CorrectorResource(Resource):
     @api.expect(input_model)
     @api.marshal_with(output_model)
