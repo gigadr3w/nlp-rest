@@ -3,8 +3,8 @@ class CorrectionModel():
         self._s = list()
 
     @property
-    def sentences(self):
+    def sentences(self) -> list:
         return self._s
     @sentences.setter
-    def sentences(self, value):
+    def sentences(self, value: list):
         self._s = value

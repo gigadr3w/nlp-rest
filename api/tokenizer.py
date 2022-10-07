@@ -1,5 +1,5 @@
 from flask_restx import Namespace, Resource, fields
-from nltk import word_tokenize, sent_tokenize
+from flask import jsonify
 
 from models.tokenizer import TokenizationModel
 from handlers.tokenizer import TokenizerHandler
@@ -11,7 +11,7 @@ input_model = api.model('ToTokenize', {
 })
 
 output_model = api.model('Tokenized', {
-    'tokens' : fields.List(fields.String(), default=["token1", "token2"], description='Due to the handled endpoint, a list of words or a list of sentences')
+    'tokens' : fields.List(fields.String(), required=True, default=["token1", "token2"], description='Due to the handled endpoint, a list of words or a list of sentences')
 })
 
 class TokenizeWordsResource(Resource):
@@ -20,7 +20,7 @@ class TokenizeWordsResource(Resource):
     def post(self):
         out = TokenizationModel()
         handler = TokenizerHandler()
-        out.Tokens = handler.GetWords(api.payload['sentence'])
+        out.tokens = handler.GetWords(api.payload['sentence'])
         return out
 
 class TokenizeSentencesResource(Resource):
@@ -29,8 +29,8 @@ class TokenizeSentencesResource(Resource):
     def post(self):
         out = TokenizationModel()
         handler = TokenizerHandler()
-        out.Tokens = handler.GetStatements(api.payload['sentence'])
+        out.tokens = handler.GetStatements(api.payload['sentence'])
         return out
 
 api.add_resource(TokenizeWordsResource, '/tokenize/words')
-api.add_resource(TokenizeWordsResource, '/tokenize/sentences')
+api.add_resource(TokenizeSentencesResource, '/tokenize/sentences')

@@ -9,14 +9,14 @@ from handlers.corrector import CorrectorHandler
 api = Namespace('corrector', description='Using pyEnchant, corrects an entire sentence for the selected language')
 
 input_model = api.model('ToCorrect', {
-    'sentences' : fields.List(fields.String(), required=True, description='The sentence that have to been corrected') 
+    'sentences' : fields.List(fields.String(), required=True, default=['sentence1', 'sentence2'], description='The sentence that have to been corrected') 
 })
 
 output_model = api.model('Corrected', {
-    'sentences' : fields.String(description='The correct sentence') 
+    'sentences' : fields.List(fields.String(), required=True, default=['sentence1 with corrected words', 'sentence2 with corrected words'], description='The correct sentence') 
 })
 
-@api.route('/corrector/<string:language>')
+@api.route('/correct/<string:language>')
 @api.param('language', description='The language to consider to correct the sentence', enum=CorrectorLanguageEnum._member_names_)
 class CorrectorResource(Resource):
     @api.expect(input_model)
