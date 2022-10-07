@@ -7,18 +7,19 @@ from flask_restx import Resource, Api
 from waitress import serve
 from werkzeug.exceptions import abort
 
-from api.about import api as api_about
+from handlers.corrector import InitCorrectors
+
 from api.corrector import api as api_corrector
+from api.tokenizer import api as api_tokenizer
 
 version = "1.0.1"
 
+app = Flask(__name__)
 api = Api()
+api.init_app(app, version=version, title='Natural Language Processing API', description='Some cool methods to process sentences!')
 
 api.add_namespace(api_corrector, path='/api')
-
-app = Flask(__name__)
-api.init_app(app, version=version, title='Natural Language Processing API', description='Some cool methods to process statements!')
-
+api.add_namespace(api_tokenizer, path='/api')
 app.config['JSON_AS_ASCII'] = False
 
 args = sys.argv
@@ -128,9 +129,7 @@ correctors = dict()
 
 def init():
     logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(asctime)s - %(message)s')
-    # initLemmatizers()
-    # initStemmers()
-    # initCorrector()
+    InitCorrectors()
 
 if(__name__ == "__main__"):
     init()
