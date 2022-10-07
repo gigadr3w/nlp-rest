@@ -4,10 +4,10 @@ from symbol import parameters
 
 class TokenizationModel():
     def __init__(self) -> None:
-        self._t = list()
+        self._ = str()
     @property
-    def Tokens(self):
+    def Token(self):
         return self._t
-    @Tokens.setter
-    def Tokens(self,value):
+    @Token.setter
+    def Token(self,value):
         self._t = value
