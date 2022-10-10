@@ -4,17 +4,17 @@ from enums.spacy import SpacyLanguageEnum
 from models.lemmatizer import LemmatizerModel
 from handlers.spacy import SpacyHandler
 
-api = Namespace('lemmatizer', description='Methods to lemmatize words within a sentence')
+api = Namespace('lemmatizer', description='Lemmatize sentences words')
 
-input_model = api.model('ToLemmatize', {
-    'sentences' : fields.List(fields.String(), required=True, default=["sentence1", "sentence2"], description='A list of sentences which words will lemmatized')
+input_model = api.model('SentencesToLemmatize', {
+    'sentences' : fields.List(fields.String(), required=True, default=["sentence to lemmatize1", "sentence to lemmatize2"], description='A list of sentences which words will be lemmatized')
 })
 
-output_model = api.model('Lemmatized', {
-    'sentences' : fields.List(fields.String(), required=True, default=["sentence1 with lemmas", "sentence1 with lemmas"], description='A list of sentences which words have been lemmatized')
+output_model = api.model('LemmatizedSentences', {
+    'sentences' : fields.List(fields.String(), required=True, default=["sentence with lemmas1", "sentence with lemmas2"], description='A list of sentences which words have been lemmatized')
 })
 
-@api.param('language', 'The language of the spacy dictionary used to lemmatize words (it must equal to the sentences language)', enum = SpacyLanguageEnum._member_names_)
+@api.param('language', 'The language of the sentences)', enum = SpacyLanguageEnum._member_names_)
 class LemmatizerSpacyResource(Resource):
     @api.expect(input_model)
     @api.marshal_with(output_model)

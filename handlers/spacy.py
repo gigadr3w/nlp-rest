@@ -27,7 +27,7 @@ class SpacyHandler():
         '''Returns the sentence with lemmatized word'''
         words = self._l(sentence)
         return str.join(' ',[w.lemma_ for w in words])
-    def GetNER(self, sentence:str) -> List[NamedEntityRecognitionModel]:
+    def GetNamedEntityRecognition(self, sentence:str) -> List[NamedEntityRecognitionModel]:
         '''Returns a list of Named Entity Recognition within sentence'''
         words = self._l(sentence)
         items = list()
