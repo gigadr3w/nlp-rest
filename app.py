@@ -15,7 +15,7 @@ version = "1.0.1"
 app = Flask(__name__)
 api = Api()
 
-api.init_app(app, version=version, title='Natural Language Processing API', description='Some cool methods to process sentences!')
+api.init_app(app, version=version, title='Natural Language Processing API', description='Some NLP methods to process sentences!')
 
 api.add_namespace(api_corrector, path='/api')
 api.add_namespace(api_tokenizer, path='/api')
