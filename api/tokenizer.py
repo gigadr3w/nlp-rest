@@ -1,35 +1,49 @@
 from flask_restx import Namespace, Resource, fields
-from flask import jsonify
 
 from models.tokenizer import TokenizationModel
 from handlers.tokenizer import TokenizerHandler
 
 api = Namespace('tokenizer', description='Using NLTK library, tokenizes a sentence into an array of words or a sentences in a list of sentence')
 
-input_model = api.model('ToTokenize', {
-    'sentence' : fields.String(required=True, default='The sentence we want tokenize', description='The sentence that will be tokenized')
+input_model = api.model('SentencesToTokenize', {
+    'sentences' : fields.List(fields.String(), required=True, description='The sentence we want tokenize', default=["sentence to tokenize1", "sentence to tokenize2"],)
 })
 
-output_model = api.model('Tokenized', {
+output_model = api.model('TokenizedSentences', {
+    'sentence' : fields.String(required=True, description='The input sentence'),
     'tokens' : fields.List(fields.String(), required=True, default=["token1", "token2"], description='Due to the handled endpoint, a list of words or a list of sentences')
 })
 
 class TokenizeWordsResource(Resource):
     @api.expect(input_model)
-    @api.marshal_with(output_model)
+    @api.marshal_list_with(output_model)
     def post(self):
-        out = TokenizationModel()
+        out = list()
         handler = TokenizerHandler()
-        out.tokens = handler.GetWords(api.payload['sentence'])
+
+        sentences = api.payload['sentences']
+        for sentence in sentences:
+            item = TokenizationModel()
+            item.sentence = sentence
+            item.tokens = handler.GetWords(sentence)
+            out.append(item)
+
         return out
 
 class TokenizeSentencesResource(Resource):
     @api.expect(input_model)
-    @api.marshal_with(output_model)
+    @api.marshal_list_with(output_model)
     def post(self):
-        out = TokenizationModel()
+        out = list()
         handler = TokenizerHandler()
-        out.tokens = handler.GetStatements(api.payload['sentence'])
+
+        sentences = api.payload['sentences']
+        for sentence in sentences:
+            item = TokenizationModel()
+            item.sentence = sentence
+            item.tokens = handler.GetStatements(sentence)
+            out.append(item)
+            
         return out
 
 api.add_resource(TokenizeWordsResource, '/tokenize/words')
