@@ -11,6 +11,7 @@ from api.corrector import api as api_corrector
 from api.tokenizer import api as api_tokenizer
 from api.stemming import api as api_stemming
 from api.lemmatize import api as api_lemmatizer
+from api.named_entity_recognition import api as api_ner
 
 version = "1.0.1"
 
@@ -23,6 +24,7 @@ api.add_namespace(api_corrector, path='/api')
 api.add_namespace(api_tokenizer, path='/api')
 api.add_namespace(api_stemming, path='/api')
 api.add_namespace(api_lemmatizer, path='/api')
+api.add_namespace(api_ner, path='/api')
 
 app.config['JSON_AS_ASCII'] = False
 
