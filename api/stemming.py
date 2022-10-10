@@ -1,5 +1,4 @@
 from flask_restx import Namespace, Resource, fields
-from flask import jsonify
 
 from enums.stemming import SnowBallStemmerLanguageEnum
 from handlers.tokenizer import TokenizerHandler
@@ -16,7 +15,7 @@ output_model = api.model('Stemmed', {
     'sentences' : fields.List(fields.String(), required=True, default=["sentence1 with stemmed word", "sentence1 with stemmed word"], description='A list of sentences which words have been stemmed')
 })
 
-@api.param('language', 'The language of the stemmer dictionary used to stem words (it should be equal to the sentences language)', enum = SnowBallStemmerLanguageEnum._member_names_)
+@api.param('language', 'The language of the stemmer dictionary used to stem words (it must equal to the sentences language)', enum = SnowBallStemmerLanguageEnum._member_names_)
 class SnowballStemmerResource(Resource):
     @api.expect(input_model)
     @api.marshal_with(output_model)
