@@ -1,9 +1,7 @@
 from flask_restx import Resource, Namespace, fields
-from langcodes import Language
 
 from enums.spacy import SpacyLanguageEnum
-from models.named_entity_recognition import NamedEntityRecognitionModel
-from handlers.spacy import SpacyHandler
+from handlers.NER import SpacyNERHandler
 
 api = Namespace('named entity recognition', description='With spaCy recognizes named entity such as organizations, countries, dates. Note - not all spacy dictionaries may recognize some entities')
 
@@ -24,6 +22,6 @@ class SpacyNERResource(Resource):
     @api.expect(input_model)
     @api.marshal_list_with(output_model)
     def post(self, language):
-        handler = SpacyHandler(SpacyLanguageEnum[language])
+        handler = SpacyNERHandler(SpacyLanguageEnum[language])
         sentence = api.payload['sentence']
-        return handler.GetNamedEntityRecognition(sentence)
+        return handler.NamedEntityRecognition(sentence)

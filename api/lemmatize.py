@@ -2,7 +2,7 @@ from flask_restx import Resource, fields, Namespace
 
 from enums.spacy import SpacyLanguageEnum
 from models.lemmatizer import LemmatizerModel
-from handlers.spacy import SpacyHandler
+from handlers.lemmatizer import SpacyLemmatizerHandler
 
 api = Namespace('lemmatizer', description='Lemmatize sentences words')
 
@@ -21,7 +21,7 @@ class LemmatizerSpacyResource(Resource):
     def post(self, language):
         sentences = api.payload['sentences']
 
-        lemmatizer = SpacyHandler(SpacyLanguageEnum[language])
+        lemmatizer = SpacyLemmatizerHandler(SpacyLanguageEnum[language])
 
         out = LemmatizerModel()
         for sentence in sentences:
