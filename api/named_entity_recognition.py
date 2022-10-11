@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, fields
 
 from enums.spacy import SpacyLanguageEnum
-from handlers.NER import SpacyNERHandler
+from handlers.ner import SpacyNERHandler
 
 api = Namespace('named entity recognition', description='With spaCy recognizes named entity such as organizations, countries, dates. Note - not all spacy dictionaries may recognize some entities')
 

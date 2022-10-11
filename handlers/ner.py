@@ -2,11 +2,11 @@ from typing import List
 
 from enums.spacy import SpacyLanguageEnum
 from models.named_entity_recognition import NamedEntityRecognitionModel
-from handlers.spacy import Datasets
+from factories.spacy import GetSpacy
 
 class SpacyNERHandler():
     def __init__(self, language:SpacyLanguageEnum) -> None:
-        self._l = Datasets[language]
+        self._l = GetSpacy(language)
     
     def NamedEntityRecognition(self, sentence:str) -> List[NamedEntityRecognitionModel]:
         '''Returns a list of Named Entity Recognition within sentence'''

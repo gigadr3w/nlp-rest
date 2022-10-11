@@ -1,9 +1,9 @@
+from factories.spacy import GetSpacy
 from enums.spacy import SpacyLanguageEnum
-from handlers.spacy import Datasets
 
 class SpacyLemmatizerHandler():
     def __init__(self, language:SpacyLanguageEnum) -> None:
-        self._l = Datasets[language]
+        self._l = GetSpacy(language)
     
     def LemmatizeWord(self, word:str) -> str:
         '''Returns the lemmatized word'''
