@@ -8,7 +8,7 @@ from models.stemming import StemmingModel
 api = Namespace('stemmer', description='Use NLTK SnowballStemmer algorithm to stem sentences words')
 
 input_model = api.model('SentencesToStem', {
-    'sentences' : fields.List(fields.String(), required=True, default=["sentence1", "sentence2"], description='A list of sentences which words will be stemmed')
+    'sentences' : fields.List(fields.String(), required=True, default=["sentence to stem", "stemming sentences"], description='A list of sentences which words will be stemmed')
 })
 
 output_model = api.model('StemmedSentences', {

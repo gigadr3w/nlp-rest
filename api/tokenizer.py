@@ -6,7 +6,7 @@ from handlers.tokenizer import TokenizerHandler
 api = Namespace('tokenizer', description='Using NLTK library, tokenizes a sentence into an array of words or a sentences in a list of sentence')
 
 input_model = api.model('SentencesToTokenize', {
-    'sentences' : fields.List(fields.String(), required=True, description='The sentence we want tokenize', default=["sentence to tokenize1", "sentence to tokenize2"],)
+    'sentences' : fields.List(fields.String(), required=True, description='The sentence we want tokenize', default=["In this case we have only one sentence with some word tokens", "In this second case we have two sentences. For both some words"],)
 })
 
 output_model = api.model('TokenizedSentences', {

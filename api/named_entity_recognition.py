@@ -6,7 +6,7 @@ from handlers.ner import SpacyNERHandler
 api = Namespace('named entity recognition', description='With spaCy recognizes named entity such as organizations, countries, dates. Note - not all spacy dictionaries may recognize some entities')
 
 input_model = api.model('SentenceToCheckForNER', {
-    'sentence' : fields.String(required=True, description='The sentence from which we want to extract its named entities')
+    'sentence' : fields.String(required=True, default="Aristotele was born in Stagira, 384 a.C. . He was one of the most important phylosopher and Alessandro Magno was its disciple. Tomorrow there's an event about it, it costs about 20 pounds.", description='The sentence from which we want to extract its named entities')
 })
 
 output_model = api.model('NERFoundList', {

@@ -7,7 +7,7 @@ from handlers.lemmatizer import SpacyLemmatizerHandler
 api = Namespace('lemmatizer', description='Lemmatize sentences words')
 
 input_model = api.model('SentencesToLemmatize', {
-    'sentences' : fields.List(fields.String(), required=True, default=["sentence to lemmatize1", "sentence to lemmatize2"], description='A list of sentences which words will be lemmatized')
+    'sentences' : fields.List(fields.String(), required=True, default=["I'm trying to explain a feature", "I was trying to explain some features"], description='A list of sentences which words will be lemmatized')
 })
 
 output_model = api.model('LemmatizedSentences', {
