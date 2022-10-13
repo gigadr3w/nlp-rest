@@ -44,8 +44,8 @@ if(__name__ == "__main__"):
 
     if len(args) > 1 and args[1] == "prod":
         logging.info('PRODUCTION ENVIRONMENT')
-        serve(app, port="8087")
+        serve(app, port="5000")
     else:
         logging.info('DEVELOPMENT ENVIRONMENT')
-        app.run(debug=True, port="8087")
+        app.run(debug=True, port="5000")
 

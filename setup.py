@@ -29,7 +29,7 @@ setup(name='nlp-rest',
     author='Andrea Costa',
     description='A NLP rest service',
     long_description='Exposes endpoints for some natural language processing functions',
-    python_requires='>=3.8.10, <4',
+    python_requires='==3.8.10',
     install_requires=[
         'werkzeug==2.1.2',
         'flask==2.1.2',
