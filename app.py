@@ -14,12 +14,12 @@ from api.lemmatize import api as api_lemmatizer
 from api.named_entity_recognition import api as api_ner
 from api.deep_analysis import api as api_analysis
 
-version = "1.0.1"
+vers = "1.0"
 
 app = Flask(__name__)
 api = Api()
 
-api.init_app(app, version=version, title='Natural Language Processing API', description='Some NLP methods to process sentences!')
+api.init_app(app, version=vers, title='Natural Language Processing API', description='Some NLP methods to process sentences!')
 
 api.add_namespace(api_corrector, path='/api')
 api.add_namespace(api_tokenizer, path='/api')

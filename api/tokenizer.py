@@ -3,7 +3,7 @@ from flask_restx import Namespace, Resource, fields
 from models.tokenizer import TokenizationModel
 from handlers.tokenizer import TokenizerHandler
 
-api = Namespace('tokenizer', description='Using NLTK library, tokenizes a sentence into an array of words or a sentences in a list of sentence')
+api = Namespace('tokenizer', description='Tokenizes a sentence into an array of words or a sentences in a list of sentence')
 
 input_model = api.model('SentencesToTokenize', {
     'sentences' : fields.List(fields.String(), required=True, description='The sentence we want tokenize', default=["In this case we have only one sentence with some word tokens", "In this second case we have two sentences. For both some words"],)

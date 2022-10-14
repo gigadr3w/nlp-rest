@@ -8,7 +8,7 @@ from handlers.deep_analyzer import DeepAnalyzerHandler
 
 api = Namespace('sentence deep analysis', description='Returns deep analysis details such as part-of-speech, morphology etc. for each word, named entity recognition etc.')
 
-input_model = api.model('SentencesToStem', {
+input_model = api.model('SentenceToAnalyze', {
     'sentence' : fields.String(required=True, default="I've heard that Microsoft have bought a new Office in Milan for 1 million $", description='The sentence to analyze')
 })
 

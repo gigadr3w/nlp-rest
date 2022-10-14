@@ -6,7 +6,7 @@ from models.corrector import CorrectionModel
 
 from handlers.corrector import CorrectorHandler
 
-api = Namespace('corrector', description='Using pyEnchant, corrects a list of sentences')
+api = Namespace('corrector', description='Corrects sentences words')
 
 input_model = api.model('SentencesToCorrect ', {
     'sentences' : fields.List(fields.String(), required=True, default=['semtence to correct 1', 'sentence to corect 2'], description='The sentences that have to been corrected') 
