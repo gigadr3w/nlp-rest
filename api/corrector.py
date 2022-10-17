@@ -1,4 +1,5 @@
-from flask_restx import Namespace, Resource, fields
+from email.policy import default
+from flask_restx import Namespace, Resource, fields, reqparse
 from nltk import word_tokenize
 
 from enums.correctors import CorrectorLanguageEnum
@@ -8,9 +9,8 @@ from handlers.corrector import CorrectorHandler
 
 api = Namespace('corrector', description='Corrects sentences words')
 
-input_model = api.model('SentencesToCorrect ', {
-    'sentences' : fields.List(fields.String(), required=True, default=['semtence to correct 1', 'sentence to corect 2'], description='The sentences that have to been corrected') 
-})
+parser = reqparse.RequestParser()
+parser.add_argument('sentences', required=True, action='append', help='The sentences that have to been corrected', location='args')
 
 output_model = api.model('CorrectedSentences', {
     'sentences' : fields.List(fields.String(), required=True, default=['corrected sentence 1', 'corrected sentence 2'], description='The correct sentences') 
@@ -19,11 +19,11 @@ output_model = api.model('CorrectedSentences', {
 @api.route('/correct/<string:language>')
 @api.param('language', description='The language of the sentence', enum=CorrectorLanguageEnum._member_names_)
 class CorrectorResource(Resource):
-    @api.expect(input_model)
+    @api.expect(parser)
     @api.marshal_with(output_model)
-    def post(self, language):
+    def get(self, language):
         corrector_handler = CorrectorHandler(CorrectorLanguageEnum[language])
-        sentences = api.payload['sentences']
+        sentences = parser.parse_args()['sentences']
 
         out = CorrectionModel()
         

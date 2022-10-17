@@ -1,4 +1,4 @@
-from flask_restx import Namespace, fields, Resource
+from flask_restx import Namespace, fields, Resource, reqparse
 
 from enums.sentence_analysis import DeepAnalyzerLanguageEnum
 from enums.pos import POSTypeEnum
@@ -8,9 +8,8 @@ from handlers.deep_analyzer import DeepAnalyzerHandler
 
 api = Namespace('sentence deep analysis', description='Returns deep analysis details such as part-of-speech, morphology etc. for each word, named entity recognition etc.')
 
-input_model = api.model('SentenceToAnalyze', {
-    'sentence' : fields.String(required=True, default="I've heard that Microsoft have bought a new Office in Milan for 1 million $", description='The sentence to analyze')
-})
+parser = reqparse.RequestParser()
+parser.add_argument('sentence', required=True, help='The sentence which words will be deeply analyzed',location='args')
 
 ner_model = api.model('NER', {
     'text' : fields.String(required=True, description='The current word as simple text'),
@@ -54,10 +53,10 @@ output_model = api.model('SentenceFullAnalysis',{
 @api.route('/analyze/<string:language>')
 @api.param('language', description='The language of the sentence', enum=DeepAnalyzerLanguageEnum._member_names_)
 class DeepAnalysisResource(Resource):
-    @api.expect(input_model)
+    @api.expect(parser)
     @api.marshal_with(output_model)    
-    def post(self, language):
+    def get(self, language):
         handler = DeepAnalyzerHandler(DeepAnalyzerLanguageEnum[language])
-        sentence = api.payload['sentence'] 
+        sentence = parser.parse_args()['sentence'] 
         out = handler.Handle(sentence)
         return out

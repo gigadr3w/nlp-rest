@@ -1,13 +1,13 @@
-from flask_restx import Namespace, Resource, fields
+from flask_restx import Namespace, Resource, fields, reqparse
+from numpy import require
 
 from models.tokenizer import TokenizationModel
 from handlers.tokenizer import TokenizerHandler
 
 api = Namespace('tokenizer', description='Tokenizes a sentence into an array of words or a sentences in a list of sentence')
 
-input_model = api.model('SentencesToTokenize', {
-    'sentences' : fields.List(fields.String(), required=True, description='The sentence we want tokenize', default=["In this case we have only one sentence with some word tokens", "In this second case we have two sentences. For both some words"],)
-})
+parser = reqparse.RequestParser()
+parser.add_argument('sentences', required=True, location='args', action='append', help='The sentence we want tokenize')
 
 output_model = api.model('TokenizedSentences', {
     'sentence' : fields.String(required=True, description='The input sentence'),
@@ -15,13 +15,13 @@ output_model = api.model('TokenizedSentences', {
 })
 
 class TokenizeWordsResource(Resource):
-    @api.expect(input_model)
+    @api.expect(parser)
     @api.marshal_list_with(output_model)
-    def post(self):
+    def get(self):
         out = list()
         handler = TokenizerHandler()
 
-        sentences = api.payload['sentences']
+        sentences = parser.parse_args()['sentences']
         for sentence in sentences:
             item = TokenizationModel()
             item.sentence = sentence
@@ -31,13 +31,13 @@ class TokenizeWordsResource(Resource):
         return out
 
 class TokenizeSentencesResource(Resource):
-    @api.expect(input_model)
+    @api.expect(parser)
     @api.marshal_list_with(output_model)
-    def post(self):
+    def get(self):
         out = list()
         handler = TokenizerHandler()
 
-        sentences = api.payload['sentences']
+        sentences = parser.parse_args()['sentences']
         for sentence in sentences:
             item = TokenizationModel()
             item.sentence = sentence

@@ -1,13 +1,13 @@
-from flask_restx import Resource, Namespace, fields
+from flask_restx import Resource, Namespace, fields, reqparse
+from numpy import require
 
 from enums.spacy import SpacyLanguageEnum
 from handlers.ner import SpacyNERHandler
 
 api = Namespace('named entity recognition', description='Recognizes named entity such as organizations, countries, dates. Note - not all spacy dictionaries may recognize some entities')
 
-input_model = api.model('SentenceToCheckForNER', {
-    'sentence' : fields.String(required=True, default="Aristotele was born in Stagira, 384 a.C. . He was one of the most important phylosopher and Alessandro Magno was its disciple. Tomorrow there's an event about it, it costs about 20 pounds.", description='The sentence from which we want to extract its named entities')
-})
+parser = reqparse.RequestParser()
+parser.add_argument('sentence', required=True, location='args', help='The sentence from which we want to extract its named entities')
 
 output_model = api.model('NERFoundList', {
     'text' : fields.String(required=True, description='The current word as simple text'),
@@ -19,9 +19,10 @@ output_model = api.model('NERFoundList', {
 @api.route('/ner/<string:language>')
 @api.param('language', 'The language of the sentence', enum = SpacyLanguageEnum._member_names_)
 class SpacyNERResource(Resource):
-    @api.expect(input_model)
+    @api.expect(parser)
     @api.marshal_list_with(output_model)
-    def post(self, language):
+    def get(self, language):
         handler = SpacyNERHandler(SpacyLanguageEnum[language])
-        sentence = api.payload['sentence']
-        return handler.NamedEntityRecognition(sentence)
+        sentence = parser.parse_args()['sentence']
+        out = handler.NamedEntityRecognition(sentence)
+        return out
