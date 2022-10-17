@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN pip install .
+RUN python setup.py install
 
 CMD ["python","./app.py", "prod"]
