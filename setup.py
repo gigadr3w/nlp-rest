@@ -7,6 +7,7 @@ class PostInstall(install):
 
         import os
         os.system('apt-get update')
+        os.system('apt-get --assume-yes install libenchant1c2a')
         os.system('apt-get --assume-yes install aspell-it')
         os.system('apt-get --assume-yes install aspell-fr')
         os.system('apt-get --assume-yes install aspell-de')
@@ -38,6 +39,10 @@ setup(name='nlp-rest',
         'nltk',
         'pyenchant==3.0.0a1',
         'wheel',
+        'spacy'
+    ],
+    setup_requires=[
+        'nltk',
         'spacy'
     ],
     cmdclass={'install':PostInstall})
